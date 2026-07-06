@@ -43,3 +43,13 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Secrets & platform-specific local config
+android/key.properties
+android/local.properties
+*.keystore
+*.jks
+.env
+
+# IDE (لو ما تبي VSCode config يترفع)
+.vscode/
