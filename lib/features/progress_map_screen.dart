@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'nav_helper.dart';
+import 'statistics_screen.dart';
 
 class ProgressMapScreen extends StatelessWidget {
   const ProgressMapScreen({super.key});
@@ -44,10 +46,22 @@ class ProgressMapScreen extends StatelessWidget {
           ],
         ),
         actions: [
+          // زر إضافي: عرض تفاصيل الإحصائيات الأسبوعية/الشهرية
+          // (push وليس pushReplacement، لأنها شاشة فرعية يُفترض الرجوع منها)
+          IconButton(
+            icon: const Icon(Icons.bar_chart, color: primaryColor),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const StatisticsScreen(),
+                ),
+              );
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.settings, color: primaryColor),
             onPressed: () {
-              // TODO: افتح شاشة الإعدادات
+              Navigator.of(context).pushNamed('/settings');
             },
           ),
         ],
@@ -91,10 +105,7 @@ class ProgressMapScreen extends StatelessWidget {
                 const Text(
                   'Quran Memorized',
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
+                      color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 12),
                 // شريط التقدم الكلي
@@ -104,31 +115,24 @@ class ProgressMapScreen extends StatelessWidget {
                     value: percent / 100,
                     minHeight: 8,
                     backgroundColor: primaryContainer,
-                    valueColor: const AlwaysStoppedAnimation<Color>(
-                      secondaryContainer,
-                    ),
+                    valueColor:
+                        const AlwaysStoppedAnimation<Color>(secondaryContainer),
                   ),
                 ),
                 const SizedBox(height: 12),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      '$completedHizbs Hizbs Completed',
-                      style: const TextStyle(
-                        color: Colors.white70,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      ),
-                    ),
-                    Text(
-                      '${totalHizbs - completedHizbs} Remaining',
-                      style: const TextStyle(
-                        color: Colors.white70,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      ),
-                    ),
+                    Text('$completedHizbs Hizbs Completed',
+                        style: const TextStyle(
+                            color: Colors.white70,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12)),
+                    Text('${totalHizbs - completedHizbs} Remaining',
+                        style: const TextStyle(
+                            color: Colors.white70,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12)),
                   ],
                 ),
               ],
@@ -147,10 +151,9 @@ class ProgressMapScreen extends StatelessWidget {
                 const Text(
                   'Hizb Journey',
                   style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: primaryColor,
-                  ),
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: primaryColor),
                 ),
                 const SizedBox(height: 4),
                 const Text(
@@ -189,13 +192,9 @@ class ProgressMapScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Consistent Progress',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: primaryColor,
-                        ),
-                      ),
+                      Text('Consistent Progress',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, color: primaryColor)),
                       Text(
                         "You've completed 3 Hizbs in the last 7 days. Keep going!",
                         style: TextStyle(color: Colors.grey, fontSize: 12),
@@ -213,23 +212,15 @@ class ProgressMapScreen extends StatelessWidget {
         currentIndex: 2,
         selectedItemColor: primaryColor,
         unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          // TODO: تنقّل بين الشاشات حسب الـ index
-        },
+        onTap: (index) => handleBottomNavTap(context, index, 2),
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_month),
-            label: 'Calendar',
-          ),
+              icon: Icon(Icons.calendar_month), label: 'Calendar'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.equalizer),
-            label: 'Progress',
-          ),
+              icon: Icon(Icons.equalizer), label: 'Progress'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
+              icon: Icon(Icons.settings), label: 'Settings'),
         ],
       ),
     );
@@ -242,9 +233,8 @@ class ProgressMapScreen extends StatelessWidget {
     final bool isMilestone = hizb % 10 == 0;
 
     // محاذاة متعرجة (يمين/يسار) لإعطاء إحساس المسار المتعرج، فقط للعقد العادية
-    final Alignment alignment = hizb.isEven
-        ? Alignment.centerRight
-        : Alignment.centerLeft;
+    final Alignment alignment =
+        hizb.isEven ? Alignment.centerRight : Alignment.centerLeft;
 
     // العقدة النشطة حاليًا (الحزب الذي يعمل عليه المستخدم)
     if (isActive) {
@@ -262,10 +252,7 @@ class ProgressMapScreen extends StatelessWidget {
               child: const Text(
                 'CURRENT FOCUS',
                 style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                ),
+                    color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
               ),
             ),
             Container(
@@ -285,20 +272,14 @@ class ProgressMapScreen extends StatelessWidget {
               child: Text(
                 '$hizb',
                 style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: primaryColor,
-                ),
+                    fontWeight: FontWeight.bold, fontSize: 18, color: primaryColor),
               ),
             ),
             const SizedBox(height: 8),
             Text(
               'Hizb $hizb',
               style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: primaryColor,
-              ),
+                  fontSize: 18, fontWeight: FontWeight.w600, color: primaryColor),
             ),
           ],
         ),
@@ -339,10 +320,9 @@ class ProgressMapScreen extends StatelessWidget {
                         : Text(
                             '$hizb',
                             style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey,
-                            ),
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey),
                           ),
                   ),
                   const SizedBox(width: 10),
@@ -381,4 +361,3 @@ class ProgressMapScreen extends StatelessWidget {
     );
   }
 }
-

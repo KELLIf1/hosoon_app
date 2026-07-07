@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'nav_helper.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -70,10 +71,9 @@ class SettingsScreen extends StatelessWidget {
                     Text(
                       'Zaid Al-Farooq',
                       style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: primaryColor,
-                      ),
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: primaryColor),
                     ),
                     SizedBox(height: 2),
                     Text(
@@ -159,23 +159,15 @@ class SettingsScreen extends StatelessWidget {
         currentIndex: 3,
         selectedItemColor: primaryColor,
         unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          // TODO: تنقّل بين الشاشات حسب الـ index
-        },
+        onTap: (index) => handleBottomNavTap(context, index, 3),
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_month),
-            label: 'Calendar',
-          ),
+              icon: Icon(Icons.calendar_month), label: 'Calendar'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.equalizer),
-            label: 'Progress',
-          ),
+              icon: Icon(Icons.equalizer), label: 'Progress'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
+              icon: Icon(Icons.settings), label: 'Settings'),
         ],
       ),
     );
@@ -229,10 +221,8 @@ class SettingsScreen extends StatelessWidget {
               if (trailingBadge != null)
                 Container(
                   margin: const EdgeInsets.only(left: 8),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 4,
-                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                   decoration: BoxDecoration(
                     color: secondaryContainer,
                     borderRadius: BorderRadius.circular(999),
@@ -240,10 +230,9 @@ class SettingsScreen extends StatelessWidget {
                   child: Text(
                     trailingBadge,
                     style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      color: primaryColor,
-                    ),
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: primaryColor),
                   ),
                 ),
               if (trailingText != null)

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'nav_helper.dart';
 
 class DailyCardScreen extends StatefulWidget {
   const DailyCardScreen({super.key});
@@ -172,30 +173,21 @@ class _DailyCardScreenState extends State<DailyCardScreen> {
               ),
               const SizedBox(width: 8),
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
                   color: primaryColor,
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: const Row(
                   children: [
-                    Icon(
-                      Icons.local_fire_department,
-                      size: 16,
-                      color: Colors.white,
-                    ),
+                    Icon(Icons.local_fire_department,
+                        size: 16, color: Colors.white),
                     SizedBox(width: 4),
-                    Text(
-                      '12',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      ),
-                    ),
+                    Text('12',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12)),
                   ],
                 ),
               ),
@@ -228,9 +220,7 @@ class _DailyCardScreenState extends State<DailyCardScreen> {
                     height: 48,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: isHighlighted
-                          ? primaryContainer
-                          : surfaceContainer,
+                      color: isHighlighted ? primaryContainer : surfaceContainer,
                       borderRadius: BorderRadius.circular(14),
                     ),
                     child: Icon(
@@ -278,17 +268,13 @@ class _DailyCardScreenState extends State<DailyCardScreen> {
                           color: isChecked
                               ? secondaryColor
                               : (isHighlighted
-                                    ? primaryContainer
-                                    : outlineVariant),
+                                  ? primaryContainer
+                                  : outlineVariant),
                           width: 2,
                         ),
                       ),
                       child: isChecked
-                          ? const Icon(
-                              Icons.check,
-                              size: 18,
-                              color: Colors.white,
-                            )
+                          ? const Icon(Icons.check, size: 18, color: Colors.white)
                           : null,
                     ),
                   ),
@@ -318,10 +304,9 @@ class _DailyCardScreenState extends State<DailyCardScreen> {
                       Text(
                         'Today Completed!',
                         style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                        ),
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16),
                       ),
                       Text(
                         'All 5 fortresses secured.',
@@ -343,10 +328,9 @@ class _DailyCardScreenState extends State<DailyCardScreen> {
                   child: const Text(
                     'RECAP',
                     style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                    ),
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12),
                   ),
                 ),
               ],
@@ -359,23 +343,15 @@ class _DailyCardScreenState extends State<DailyCardScreen> {
         currentIndex: 0,
         selectedItemColor: primaryColor,
         unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          // TODO: تنقّل بين الشاشات حسب الـ index
-        },
+        onTap: (index) => handleBottomNavTap(context, index, 0),
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_month),
-            label: 'Calendar',
-          ),
+              icon: Icon(Icons.calendar_month), label: 'Calendar'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.equalizer),
-            label: 'Progress',
-          ),
+              icon: Icon(Icons.equalizer), label: 'Progress'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
+              icon: Icon(Icons.settings), label: 'Settings'),
         ],
       ),
     );

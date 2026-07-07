@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'nav_helper.dart';
 
 class StatisticsScreen extends StatefulWidget {
   const StatisticsScreen({super.key});
@@ -22,35 +23,13 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
 
   // بيانات جدول الأسبوع: اليوم + حالة كل حصن (خمسة حصون) + المجموع
   final List<Map<String, dynamic>> weeklyLog = [
-    {
-      'day': 'Sun 14',
-      'values': [true, true, false, true, true],
-    },
-    {
-      'day': 'Mon 15',
-      'values': [true, true, true, true, true],
-    },
-    {
-      'day': 'Tue 16',
-      'values': [false, true, false, false, false],
-    },
-    {
-      'day': 'Wed 17',
-      'values': [true, true, false, false, false],
-      'today': true,
-    },
-    {
-      'day': 'Thu 18',
-      'values': [false, false, false, false, false],
-    },
-    {
-      'day': 'Fri 19',
-      'values': [false, false, false, false, false],
-    },
-    {
-      'day': 'Sat 20',
-      'values': [false, false, false, false, false],
-    },
+    {'day': 'Sun 14', 'values': [true, true, false, true, true]},
+    {'day': 'Mon 15', 'values': [true, true, true, true, true]},
+    {'day': 'Tue 16', 'values': [false, true, false, false, false]},
+    {'day': 'Wed 17', 'values': [true, true, false, false, false], 'today': true},
+    {'day': 'Thu 18', 'values': [false, false, false, false, false]},
+    {'day': 'Fri 19', 'values': [false, false, false, false, false]},
+    {'day': 'Sat 20', 'values': [false, false, false, false, false]},
   ];
 
   // بيانات تحليلات الحصون الخمسة للنظرة الشهرية
@@ -64,37 +43,11 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
 
   // بيانات خريطة النشاط الشهرية (1 = كامل، 0.5 = جزئي، 0 = بدون)
   final List<double> monthlyActivity = const [
-    1,
-    1,
-    1,
-    0.5,
-    0,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    0.5,
-    1,
-    1,
-    1,
-    0,
-    1,
-    1,
-    1,
-    1,
-    1,
-    0.5,
-    1,
-    1,
-    1,
-    0.5,
-    1,
-    0,
-    1,
-    1,
-    0.5,
+    1, 1, 1, 0.5, 0, 1, 1,
+    1, 1, 1, 1, 0.5, 1, 1,
+    1, 0, 1, 1, 1, 1, 1,
+    0.5, 1, 1, 1, 0.5, 1, 0,
+    1, 1, 0.5,
   ];
 
   @override
@@ -151,10 +104,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
           ),
           const SizedBox(height: 16),
           // عرض المحتوى المناسب حسب التبويب المختار
-          if (selectedTab == 0)
-            ..._buildWeeklyView()
-          else
-            ..._buildMonthlyView(),
+          if (selectedTab == 0) ..._buildWeeklyView() else ..._buildMonthlyView(),
         ],
       ),
       // شريط التنقل السفلي
@@ -162,23 +112,15 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         currentIndex: 2,
         selectedItemColor: primaryColor,
         unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          // TODO: تنقّل بين الشاشات حسب الـ index
-        },
+        onTap: (index) => handleBottomNavTap(context, index, 2),
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_month),
-            label: 'Calendar',
-          ),
+              icon: Icon(Icons.calendar_month), label: 'Calendar'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.equalizer),
-            label: 'Progress',
-          ),
+              icon: Icon(Icons.equalizer), label: 'Progress'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
+              icon: Icon(Icons.settings), label: 'Settings'),
         ],
       ),
     );
@@ -225,27 +167,21 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
               children: [
                 Row(
                   children: const [
-                    Text(
-                      '24',
-                      style: TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
+                    Text('24',
+                        style: TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white)),
                     SizedBox(width: 6),
                     Icon(Icons.local_fire_department, color: skyBlue, size: 32),
                   ],
                 ),
-                const Text(
-                  'DAY STREAK',
-                  style: TextStyle(
-                    color: skyBlue,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1,
-                    fontSize: 12,
-                  ),
-                ),
+                const Text('DAY STREAK',
+                    style: TextStyle(
+                        color: skyBlue,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1,
+                        fontSize: 12)),
               ],
             ),
             Container(
@@ -300,13 +236,9 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                 _navCircleButton(Icons.chevron_left, () {
                   // TODO: انتقل للأسبوع السابق
                 }),
-                const Text(
-                  'Jun 14 - Jun 20',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: primaryColor,
-                  ),
-                ),
+                const Text('Jun 14 - Jun 20',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600, color: primaryColor)),
                 _navCircleButton(Icons.chevron_right, () {
                   // TODO: انتقل للأسبوع القادم
                 }),
@@ -339,14 +271,11 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Consistency Tip',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                      color: primaryColor,
-                    ),
-                  ),
+                  Text('Consistency Tip',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          color: primaryColor)),
                   SizedBox(height: 4),
                   Text(
                     'Your "Preparation" fortress is often missed on Tuesdays. '
@@ -413,9 +342,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
               '$total/5',
               textAlign: TextAlign.end,
               style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: primaryColor,
-              ),
+                  fontWeight: FontWeight.bold, color: primaryColor),
             ),
           ),
         ],
@@ -440,25 +367,19 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
               children: const [
                 Icon(Icons.local_fire_department, color: skyBlue),
                 SizedBox(width: 6),
-                Text(
-                  'CURRENT MASTERY STREAK',
-                  style: TextStyle(
-                    color: skyBlue,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
-                  ),
-                ),
+                Text('CURRENT MASTERY STREAK',
+                    style: TextStyle(
+                        color: skyBlue,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12)),
               ],
             ),
             const SizedBox(height: 4),
-            const Text(
-              '24 Day Streak',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            const Text('24 Day Streak',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             const Text(
               "You're in the top 5% of consistent learners this month. Keep the momentum!",
@@ -490,25 +411,19 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                           value: 0.75,
                           strokeWidth: 5,
                           backgroundColor: surfaceContainer,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            primaryColor,
-                          ),
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(primaryColor),
                         ),
-                        const Text(
-                          '75%',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: primaryColor,
-                          ),
-                        ),
+                        const Text('75%',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: primaryColor)),
                       ],
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    'Monthly Completion',
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
-                  ),
+                  const Text('Monthly Completion',
+                      style: TextStyle(fontSize: 12, color: Colors.grey)),
                 ],
               ),
             ),
@@ -523,19 +438,14 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
               ),
               child: Column(
                 children: [
-                  const Text(
-                    '92%',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: primaryColor,
-                    ),
-                  ),
+                  const Text('92%',
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor)),
                   const SizedBox(height: 8),
-                  const Text(
-                    'Consistency Score',
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
-                  ),
+                  const Text('Consistency Score',
+                      style: TextStyle(fontSize: 12, color: Colors.grey)),
                 ],
               ),
             ),
@@ -553,14 +463,11 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Monthly Activity',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: primaryColor,
-              ),
-            ),
+            const Text('Monthly Activity',
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: primaryColor)),
             const SizedBox(height: 12),
             GridView.builder(
               shrinkWrap: true,
@@ -605,14 +512,11 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Fortress Analytics',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: primaryColor,
-              ),
-            ),
+            const Text('Fortress Analytics',
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: primaryColor)),
             const SizedBox(height: 16),
             for (final f in fortressAnalytics) _fortressAnalyticsRow(f),
           ],
@@ -626,14 +530,11 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
           _navCircleButton(Icons.chevron_left, () {
             // TODO: انتقل للشهر السابق
           }),
-          const Text(
-            'October 2023',
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 18,
-              color: primaryColor,
-            ),
-          ),
+          const Text('October 2023',
+              style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 18,
+                  color: primaryColor)),
           _navCircleButton(Icons.chevron_right, () {
             // TODO: انتقل للشهر القادم
           }),
@@ -653,20 +554,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                fortress['title'],
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: primaryColor,
-                ),
-              ),
-              Text(
-                '$percent%',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: primaryColor,
-                ),
-              ),
+              Text(fortress['title'],
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w600, color: primaryColor)),
+              Text('$percent%',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, color: primaryColor)),
             ],
           ),
           const SizedBox(height: 6),
@@ -701,14 +594,11 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         children: [
           Icon(icon, color: primaryColor),
           const SizedBox(height: 20),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: primaryColor,
-            ),
-          ),
+          Text(value,
+              style: const TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: primaryColor)),
           Text(label, style: const TextStyle(fontSize: 12, color: Colors.grey)),
         ],
       ),

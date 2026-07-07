@@ -129,17 +129,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w600,
-                                  color: isSelected
-                                      ? Colors.white
-                                      : primaryColor,
+                                  color: isSelected ? Colors.white : primaryColor,
                                 ),
                               ),
                             ),
                             if (isSelected)
-                              const Icon(
-                                Icons.check_circle,
-                                color: Colors.white,
-                              ),
+                              const Icon(Icons.check_circle, color: Colors.white),
                           ],
                         ),
                       ),
@@ -153,8 +148,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    // TODO: save the selected rate (options[selectedIndex])
-                    // then navigate to the next screen
+                    // TODO: save options[selectedIndex] to Hive once the
+                    // settings box is ready (e.g. settingsBox.put('weeklyRate', ...))
+
+                    // pushReplacementNamed so the user can't swipe/back into
+                    // Onboarding again after finishing it
+                    Navigator.of(context).pushReplacementNamed('/home');
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: primaryColor,
@@ -169,10 +168,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     children: [
                       Text(
                         'Start',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                       ),
                       SizedBox(width: 8),
                       Icon(Icons.arrow_forward),
